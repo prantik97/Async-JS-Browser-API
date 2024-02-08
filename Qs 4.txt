@@ -1,0 +1,83 @@
+Question. Compare Promises to callbacks and discuss why Promises are preferred for managing asynchronous 
+code.
+
+ANS: JavaScript, a language known for its asynchronous capabilities, provides developers 
+with two primary ways to handle asynchronous operations: callbacks and promises. 
+In this article, we will explore the differences between these two approaches, their 
+advantages, and when to use each one in your JavaScript code.
+
+Callbacks:
+Callbacks have been a fundamental part of JavaScript for a long time. They are functions 
+that are passed as arguments to other functions and are executed once a particular task 
+is completed. Callbacks are the building blocks of asynchronous JavaScript.
+
+function fetchData(callback) {
+  setTimeout(function () {
+    callback('Data received!');
+  }, 1000);
+}
+
+function processResult(result) {
+  console.log(result);
+}
+
+fetchData(processResult); 
+
+Callbacks work well for simple asynchronous operations. However, they can lead to 
+"callback hell" or "pyramid of doom" when multiple asynchronous tasks are nested. 
+This can make the code hard to read and maintain.
+
+Promises: 
+Promises were introduced to address the issues of callback hell and improve the readability of asynchronous code. A promise represents a value that may not be available yet but will be resolved or rejected at some point in the future.
+function fetchData() {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
+      resolve('Data received!');
+    }, 1000);
+  });
+}
+
+fetchData()
+  .then(function (result) {
+    console.log(result);
+  })
+  .catch(function (error) {
+    console.error(error);
+  }); 
+
+Promises provide a more structured and linear way to handle asynchronous operations. 
+They allow you to chain .then() and .catch() handlers, making it easier to follow the 
+flow of your code.
+
+Advantages of Promises:
+
+Readability: Promises make code easier to read and understand, especially when dealing 
+with multiple asynchronous tasks.
+
+Error Handling: Promises provide a centralized .catch() handler for error management, 
+simplifying error handling.
+
+Chaining: Promises allow you to chain multiple asynchronous operations in a more 
+organized manner.
+
+Promise.all(): You can use Promise.all() to execute multiple promises concurrently
+ and wait for all of them to resolve.
+
+Promise.all([fetchData1(), fetchData2()])
+  .then(function (results) {
+    // Both promises resolved successfully
+  })
+  .catch(function (error) {
+    // Handle any errors from any promise
+  }); 
+When to Choose Callbacks
+Callbacks still have their place, especially in older codebases or when working with libraries that use callbacks. Additionally, callbacks are lightweight and can be more suitable for very simple asynchronous tasks.
+When to Choose Promises
+Promises are the modern and recommended way to handle asynchronous operations in 
+JavaScript. They are especially useful when dealing with complex, nested asynchronous 
+tasks or when you want to take advantage of features like chaining and Promise.all().
+
+In conclusion, while both callbacks and promises have their place in JavaScript, 
+promises are the preferred choice for handling asynchronous operations in modern 
+JavaScript code. They offer improved readability and error handling, making it easier 
+to manage complex asynchronous workflows. 

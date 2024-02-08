@@ -1,0 +1,69 @@
+<!-- // Q2. Write a JavaScript program to make an AJAX request using the XMLHttpRequest object to fetch data
+// from a remote API (https://jsonplaceholder.typicode.com/users) and log a list of user names from the
+// response to the browser console and output. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User names</title>
+</head>
+
+<body>
+    <button id="getData">Get user names</button>
+    <ul id="itemsList">
+        <!-- Unordered list will be populated dynamically -->
+    </ul>
+
+    <script>
+        const requestUrl = "https://jsonplaceholder.typicode.com/users";
+        let getBtn = document.getElementById("getData");
+        getBtn.addEventListener('click', btnClickHandler);
+
+        function btnClickHandler() {
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('GET', requestUrl, true);
+
+            xhr.onprogress = function () {
+                console.log("In Progress");
+            }
+
+            xhr.onload = function () {
+
+                if (this.status === 200) {
+
+                    const responseData = JSON.parse(this.responseText);
+                    console.log(responseData);
+                    displayData(responseData);
+                }
+                else {
+                    console.error("Some Error happened");
+                }
+            }
+
+            xhr.send(); 
+
+            function displayData(data) {
+                let itemsList = document.getElementById('itemsList');
+
+                // Clear existing list items
+                itemsList.innerHTML = '';
+
+                // Loop through data and create list items
+                data.forEach(function (item) {
+                    let li = document.createElement('li');
+                    li.textContent = item.name; // Assuming each item has a 'name' property
+                    itemsList.appendChild(li);
+                });
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>

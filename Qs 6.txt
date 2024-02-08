@@ -1,0 +1,49 @@
+Question. Describe the purpose and usage of the localStorage and sessionStorage APIs in web development. Give 
+suitable examples for each.
+
+ANS: Both localStorage and sessionStorage are part of the Web Storage API and are used for 
+storing key-value pairs locally within the user's browser. They provide a way for web 
+applications to store data persistently (localStorage) or temporarily (sessionStorage) 
+across browser sessions. Here's a description of each along with examples:
+
+localStorage:
+
+Purpose: localStorage is designed for storing data persistently across browser sessions. 
+Data stored using localStorage remains available even after the browser is closed and 
+reopened.
+
+Usage: To store data using localStorage, you can use the setItem() method, passing a 
+key-value pair. To retrieve the stored data, you can use the getItem() method, 
+specifying the key.
+
+Example:
+
+// Storing data in localStorage
+localStorage.setItem('username', 'John');
+// Retrieving data from localStorage
+const username = localStorage.getItem('username');
+console.log(username); // Output: John
+
+sessionStorage:
+Purpose: sessionStorage is similar to localStorage, but it's designed for storing data 
+temporarily within a single browser session. Data stored using sessionStorage is
+ available only for the duration of the page session.
+
+Usage: The usage of sessionStorage is identical to localStorage. You can use setItem() to 
+store data and getItem() to retrieve it.
+
+Example:
+
+// Storing data in sessionStorage
+sessionStorage.setItem('theme', 'dark');
+// Retrieving data from sessionStorage
+const theme = sessionStorage.getItem('theme');
+console.log(theme); // Output: dark
+
+Both localStorage and sessionStorage support storing data as strings. If you need to 
+store complex data types like arrays or objects, you'll need to serialize them to strings 
+using methods like JSON.stringify() before storing, and deserialize them using 
+JSON.parse() after retrieval.
+
+These APIs are commonly used for storing user preferences, session data, or caching data 
+to improve performance in web applications.

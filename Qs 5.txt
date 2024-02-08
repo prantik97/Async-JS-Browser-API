@@ -1,0 +1,37 @@
+Question. List and briefly explain some common Browser APIs available to JavaScript developers.
+
+ANS: Browser APIs (Application Programming Interfaces) provide JavaScript developers 
+with access to various functionalities and features of web browsers. Here are some 
+common Browser APIs along with brief explanations:
+
+DOM (Document Object Model):
+The DOM API allows JavaScript to interact with the structure of HTML and XML documents. 
+It provides methods and properties to dynamically access, modify, and manipulate the 
+content and structure of web pages.
+
+Fetch API:
+The Fetch API provides an interface for fetching resources 
+(such as JSON data, text, or files) across the network. It offers a more flexible and 
+powerful way to make HTTP requests compared to older techniques like XMLHttpRequest.
+
+Geolocation API:
+The Geolocation API allows web applications to access the user's geographical 
+location information. Developers can use this API to retrieve the device's current 
+position, track movement, and provide location-based services.
+
+Web Storage API:
+The Web Storage API enables web applications to store data locally within the user's 
+browser. It includes both localStorage and sessionStorage, which provide mechanisms for 
+storing key-value pairs persistently or temporarily, respectively.
+
+WebRTC (Web Real-Time Communication):
+WebRTC enables peer-to-peer communication in web browsers, allowing direct audio, video, 
+and data streaming between users. It eliminates the need for plugins or third-party 
+software, making real-time communication applications (such as video conferencing and 
+file sharing) feasible on the web.
+
+WebSockets:
+WebSockets provide a persistent, full-duplex communication channel between a 
+client (typically a web browser) and a server. This enables real-time, bidirectional 
+data exchange, making it suitable for applications requiring low-latency communication, 
+such as chat applications and online gaming.

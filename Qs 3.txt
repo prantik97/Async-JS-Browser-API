@@ -1,0 +1,84 @@
+Q3. Whatis the same-origin policy in the context of AJAX requests, and how can you work around it?
+
+ANS: The same-origin policy is a critical security mechanism that restricts how a document
+ or script loaded by one origin can interact with a resource from another origin.
+ This policy is designed to mitigate the risk of cross-site scripting (XSS) attacks, 
+ where malicious scripts could potentially access sensitive data from other origins.
+
+In the context of AJAX (Asynchronous JavaScript and XML) requests, the same-origin policy 
+means that a web page can only make AJAX requests to the same origin as the one from which 
+it was served, unless the server explicitly allows cross-origin requests through 
+mechanisms like Cross-Origin Resource Sharing (CORS).
+
+However, there are several ways to work around the same-origin policy:
+
+Changing Origin: 
+Occasionally, the same origin policy may block requests between subdomains on the same 
+domain. The easiest way to solve this problem is to set document.domain from within 
+JavaScript. For example:
+document.domain = 'mysite.com';
+Note that the port number is stored separately. Making one domain interact with another 
+on a different port (which is the case with chat applications), would require something 
+different. Even setting document.domain = document.domain, which overwrites the port 
+number to null will not help in getting this done.
+
+Using a Web Proxy:
+Although specifying document.domain helps you contact subdomains of your own website, 
+what would you do if you needed to access data from a different domain altogether? 
+An interesting, yet easy to understand, approach is to use a web proxy on your own 
+server.
+Instead of sending a request directly from your domain (http://www.mysite.com/) to a 
+new domain (http://www.myothersite.com/), you instead send a request to your own server 
+(http://www.mysite.com/connect/), which in turns sends a request to the new domain 
+(http://www.myothersite.com/). To the browser, it appears you are exchanging the data 
+with your own server. In reality, in the background, you have accessed data on a new 
+domain from your server.
+
+Using JSONP:
+Another way of implementing cross browser requests is by using JSONP, or “JSON with 
+padding.” JSONP takes advantage of the fact that <script> tags are not subject 
+to the same-origin policy. For example, you can include a library like jQuery on your 
+page even if it is hosted on Google’s CDN.
+JSONP requests are made by dynamically requesting a <script> tag. The interesting 
+part is that the response is JSON wrapped in a function call. When making the request, 
+you specify the function name as a callback function. When the server responds, 
+the callback function (which must exist on your page) is executed with the data returned 
+from the server.
+For example, a typical JSON response might look like this:
+{
+  "id": "123",
+  "name": "Captain Jack Sparrow"
+}
+The same response can be emulated in a script tag with the callback function myFunction 
+as shown below.
+<script src="http://www.myothersite.com/get_data?callback=myFunction"></script>
+The browser downloads the data from the specified URL normally and evalutates it as 
+JavaScript. The response might look like this:
+myFunction({"id": "123", "name": "Captain Jack Sparrow"});
+myFunction would then be invoked, allowing your page to process the JSON returned from myothersite.com.
+
+Cross Domain Resource Sharing:
+Although JSONP can be used to accomplish most tasks with relative ease, there are several 
+shortcomings. You can only send HTTP GET requests using JSONP. This rules out any 
+possibility of doing CRUD operations cleanly using JSONP. Although this security 
+concern is eliminated with the proxy method, there is another interesting method that 
+will help us interact with RESTful APIs without jumping through hoops.
+Cross Domain Resource Sharing, or CORS, works by modifying HTTP headers in your requests 
+to access resources on a different domain. In IE8+, simple CORS requests using the 
+XDomainRequest (instead of the XMLHttpRequest) are permitted. A simple example is shown 
+below.
+request = new XDomainRequest();
+request.open(method, url);
+request.onload = function() {
+  callback(req.responseText);
+};
+request.send(data);
+We have been talking about “simple” requests. Not-so-simple requests refer to preflighted 
+requests, which first send an HTTP request to the other domain to determine whether it is 
+safe to perform that action. A detailed example of a preflighted request and the 
+information exchange between the server and client is explained in this MDN post on CORS.
+
+These methods provide developers with options to overcome the limitations imposed 
+by the same-origin policy while ensuring security and compliance with web standards.
+ However, it's essential to choose the appropriate workaround based on the specific 
+ requirements and security considerations of the application.
